@@ -1,7 +1,10 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import Main from "./views/Main";
+
 function App() {
   return (
     <div className="App">
-      <h1>Hello App</h1>
+      <Main />
     </div>
   );
 }
