@@ -13,8 +13,8 @@ const SearchControls = () => {
       <div className="m-2">
         <div className="row">
           <label className="col-2">Priority</label>
-          <select className="col-3">
-            <option selected>All</option>
+          <select defaultValue={0} className="col-3">
+            <option value={0}>All</option>
             <option>High</option>
             <option>Medium</option>
             <option>Low</option>
@@ -24,8 +24,8 @@ const SearchControls = () => {
       <div className="m-2">
         <div className="row">
           <label className="col-2">State</label>
-          <select className="col-3">
-            <option selected>All</option>
+          <select defaultValue={0} className="col-3">
+            <option value={0}>All</option>
             <option>Done</option>
             <option>Undone</option>
           </select>

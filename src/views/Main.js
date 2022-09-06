@@ -1,4 +1,5 @@
 import Container from "../components/Container/Container";
+import NewTodoButton from "../components/NewTodo/NewTodoButton";
 import SearchControls from "../components/SearchControls/SearchControls";
 import TodoList from "../components/TodoList/TodoList";
 
@@ -9,7 +10,7 @@ const items = [
     due_date: "2022/09/22",
     done: false,
     done_date: "",
-    priority: "Low",
+    priority: 3,
     creation_date: "2022/09/13",
   },
   {
@@ -18,7 +19,7 @@ const items = [
     due_date: "2022/09/19",
     done: false,
     done_date: "",
-    priority: "Low",
+    priority: 0,
     creation_date: "2025/01/21",
   },
   {
@@ -27,7 +28,7 @@ const items = [
     due_date: "",
     done: false,
     done_date: "",
-    priority: "Low",
+    priority: 1,
     creation_date: "2022/12/21",
   },
   {
@@ -36,7 +37,7 @@ const items = [
     due_date: "2022/09/10",
     done: true,
     done_date: "",
-    priority: "Low",
+    priority: 2,
     creation_date: "2026/04/21",
   },
 ];
@@ -44,6 +45,7 @@ const Main = () => {
   return (
     <Container>
       <SearchControls />
+      <NewTodoButton />
       <TodoList items={items} />
     </Container>
   );

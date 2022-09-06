@@ -1,4 +1,14 @@
+import { useState } from "react";
+import NewTodoModal from "../NewTodo/NewTodoModal";
+import { Priorities } from "../../utils/constants";
+
 const TodoItem = ({ item }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const onToggleModal = () => {
+    setOpenModal((openModal) => !openModal);
+  };
+
   const getTodoStatus = () => {
     if (item.due_date && !item.done) {
       const today = new Date();
@@ -16,22 +26,35 @@ const TodoItem = ({ item }) => {
     return "";
   };
   return (
-    <tr className={`${getTodoStatus()} ${getIfDone()}`}>
-      <th scope="row">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          checked={item.done ? true : false}
+    <>
+      {openModal && (
+        <NewTodoModal
+          title="Edit To-Do"
+          description="Update To-do task"
+          onToggleModal={onToggleModal}
+          item={item}
         />
-      </th>
-      <td>{item.text}</td>
-      <td>{item.priority}</td>
-      <td>{item.due_date}</td>
-      <td>
-        <button className="btn btn-warning">Edit</button>
-        <button className="btn btn-danger">Delete</button>
-      </td>
-    </tr>
+      )}
+      <tr className={`${getTodoStatus()} ${getIfDone()}`}>
+        <th scope="row">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            checked={item.done ? true : false}
+            onChange={() => !item.done}
+          />
+        </th>
+        <td>{item.text}</td>
+        <td>{Priorities[item.priority].name}</td>
+        <td>{item.due_date}</td>
+        <td>
+          <button className="btn btn-warning" onClick={onToggleModal}>
+            Edit
+          </button>
+          <button className="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </>
   );
 };
 export default TodoItem;
