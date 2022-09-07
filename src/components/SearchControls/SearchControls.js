@@ -1,3 +1,5 @@
+import { Priorities, States } from "../../utils/constants";
+
 const SearchControls = () => {
   const formHandler = (e) => {
     e.preventDefault();
@@ -14,10 +16,18 @@ const SearchControls = () => {
         <div className="row">
           <label className="col-2">Priority</label>
           <select defaultValue={0} className="col-3">
-            <option value={0}>All</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
+            <option key={"All"} value={"All"}>
+              {"All"}
+            </option>
+            <option key={"Low"} value={"Low"}>
+              {"Low"}
+            </option>
+            <option key={"Medium"} value={"Medium"}>
+              {"Medium"}
+            </option>
+            <option key={"High"} value={"High"}>
+              {"High"}
+            </option>
           </select>
         </div>
       </div>
@@ -25,9 +35,15 @@ const SearchControls = () => {
         <div className="row">
           <label className="col-2">State</label>
           <select defaultValue={0} className="col-3">
-            <option value={0}>All</option>
-            <option>Done</option>
-            <option>Undone</option>
+            <option key={"All"} value={"All"}>
+              {"All"}
+            </option>
+            <option key={"Done"} value={"Done"}>
+              {"Done"}
+            </option>
+            <option key={"Undone"} value={"Undone"}>
+              {"Undone"}
+            </option>
           </select>
         </div>
       </div>

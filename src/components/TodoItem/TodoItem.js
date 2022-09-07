@@ -44,8 +44,8 @@ const TodoItem = ({ item }) => {
             onChange={() => !item.done}
           />
         </th>
-        <td>{item.text}</td>
-        <td>{Priorities[item.priority].name}</td>
+        <td>{item.name}</td>
+        <td>{item.priority}</td>
         <td>{item.due_date}</td>
         <td>
           <button className="btn btn-warning" onClick={onToggleModal}>

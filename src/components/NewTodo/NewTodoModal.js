@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import classes from "./NewTodoModal.module.css";
-import { Priorities } from "../../utils/constants";
 
 const Backdrop = () => {
   return <div className={classes.backdrop} />;
@@ -19,7 +18,7 @@ const ModalOverlay = (props) => {
         <input
           type={"text"}
           placeholder="Enter to-do name"
-          value={props.item ? props.item.text : ""}
+          value={props.item ? props.item.name : ""}
         />
         <br />
         <label>Due date (optional) </label>
@@ -32,13 +31,18 @@ const ModalOverlay = (props) => {
         <br />
         <label>Priority </label>
         <select defaultValue={props.item ? props.item.priority : 0}>
-          {Priorities.map((item) => {
-            return (
-              <option key={item.name} value={item.value}>
-                {item.name}
-              </option>
-            );
-          })}
+          <option key={"All"} value={"All"}>
+            {"All"}
+          </option>
+          <option key={"Low"} value={"Low"}>
+            {"Low"}
+          </option>
+          <option key={"Medium"} value={"Medium"}>
+            {"Medium"}
+          </option>
+          <option key={"High"} value={"High"}>
+            {"High"}
+          </option>
         </select>
       </div>
       <footer className={classes.actions}>
