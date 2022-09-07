@@ -6,12 +6,16 @@ import TodoList from "../components/TodoList/TodoList";
 import useTodos from "../services/hooks/useTodos";
 
 const Main = () => {
-  const [todos] = useTodos("todos");
+  const [hasChanged, setHasChanged] = useState(false);
+  const [todos] = useTodos(hasChanged);
+  const refresh = () => {
+    setHasChanged((hasChanged) => setHasChanged(!hasChanged));
+  };
 
   return (
     <Container>
       <SearchControls />
-      <NewTodoButton />
+      <NewTodoButton refresh={refresh} />
       <TodoList items={todos} />
     </Container>
   );

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import NewTodoModal from "./NewTodoModal";
 
-const NewTodoButton = () => {
+const NewTodoButton = (props) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onToggleModal = () => {
     setOpenModal((openModal) => !openModal);
+    props.refresh();
   };
 
   return (
