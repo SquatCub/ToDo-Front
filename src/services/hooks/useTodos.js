@@ -1,10 +1,10 @@
-import { BACKEND_URL } from "../constants";
+import { BACKEND_URL } from "../../utils/constants";
 import { useState, useEffect } from "react";
-const useTodo = () => {
+const useTodo = (props) => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    console.log(process.env);
+    console.log(props);
     fetch(BACKEND_URL + "todos")
       .then((response) => response.json())
       .then((data) => {

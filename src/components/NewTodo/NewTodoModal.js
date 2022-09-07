@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import classes from "./NewTodoModal.module.css";
 import { Backdrop } from "../Backdrop/Backdrop";
-import { ModalOverlay } from "../../Modal/ModalOverlay";
+import { Modal } from "../Modal/Modal";
 
 const NewTodoModal = (props) => {
   return (
@@ -12,7 +12,7 @@ const NewTodoModal = (props) => {
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay
+        <Modal
           title={props.title}
           description={props.description}
           item={props.item ? props.item : null}

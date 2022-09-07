@@ -1,7 +1,8 @@
 import { useEffect, useState, useReducer } from "react";
-import { inputReducer } from "../utils/reducers/modalReducers";
+import { inputReducer } from "../../utils/reducers/modalReducers";
+import { createTodo } from "../../services/TodosServices";
 
-export const ModalOverlay = (props) => {
+export const Modal = (props) => {
   const [nameState, dispatchName] = useReducer(inputReducer, {
     value: props.item ? props.item.name : "",
     isValid: null,
@@ -12,15 +13,18 @@ export const ModalOverlay = (props) => {
   });
   const [priority, setPriority] = useState("All");
   const [formIsValid, setFormIsValid] = useState(false);
+  const [todoIsCreated, setTodoIsCreated] = useState(null);
 
   const nameChangeHandler = (event) => {
     dispatchName({ type: "INPUT_NAME", val: event.target.value });
   };
-
   const dateChangeHandler = (event) => {
     dispatchDate({ type: "INPUT_DATE", val: event.target.value });
   };
-  const clearDate = () => {
+  const priorityChangeHandler = (event) => {
+    setPriority(event.target.value);
+  };
+  const clearDateHandler = () => {
     dispatchDate({});
   };
 
@@ -32,8 +36,16 @@ export const ModalOverlay = (props) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(priority);
+    createTodo({
+      name: nameState.value,
+      due_date: dateState.value,
+      priority: priority,
+    }).then((data) => {
+      if (data.code === 200) setTodoIsCreated(true);
+      if (data.code === 400) setTodoIsCreated(false);
+    });
   };
+
   return (
     <form onSubmit={submitForm} className={props.classes.modal}>
       <header className={`${props.classes.header} bg-success`}>
@@ -70,16 +82,19 @@ export const ModalOverlay = (props) => {
         {dateState.isValid === false && (
           <div className="invalid-feedback">Date must be before today.</div>
         )}
-        <button type={"button"} className="btn btn-sm" onClick={clearDate}>
+        <button
+          type={"button"}
+          className="btn btn-sm"
+          onClick={clearDateHandler}
+        >
           Clear date
         </button>
-
         <br />
         <label>Priority </label>
         <select
           className="form-select"
           defaultValue={props.item ? props.item.priority : priority}
-          onChange={(e) => setPriority(e.target.value)}
+          onChange={priorityChangeHandler}
         >
           <option key={"Low"} value={"Low"}>
             {"Low"}
@@ -108,6 +123,14 @@ export const ModalOverlay = (props) => {
           Save
         </button>
       </footer>
+      <div className={props.classes.actions}>
+        {todoIsCreated === true && (
+          <span className="text-success">To-do created successfully.</span>
+        )}
+        {todoIsCreated === false && (
+          <span className="text-danger">To-do was not created.</span>
+        )}
+      </div>
     </form>
   );
 };
