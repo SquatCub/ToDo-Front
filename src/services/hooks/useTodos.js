@@ -1,18 +1,19 @@
 import { BACKEND_URL } from "../../utils/constants";
 import { useState, useEffect } from "react";
-const useTodo = (time) => {
+const useTodo = (time, page) => {
   const [todos, setTodos] = useState([]);
+  const [size, setSize] = useState(false);
 
   useEffect(() => {
-    fetch(BACKEND_URL + "todos")
+    fetch(BACKEND_URL + "todos?page=" + page)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setTodos(data.reverse());
+        setTodos(data.data);
+        setSize(data.size);
       });
-  }, [time]);
+  }, [time, page]);
 
-  return [todos];
+  return [todos, size];
 };
 
 export default useTodo;

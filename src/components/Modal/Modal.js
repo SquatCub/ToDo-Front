@@ -3,12 +3,13 @@ import { inputReducer } from "../../utils/reducers/modalReducers";
 import { createTodo } from "../../services/TodosServices";
 
 export const Modal = (props) => {
+  console.log(props);
   const [nameState, dispatchName] = useReducer(inputReducer, {
     value: props.item ? props.item.name : "",
     isValid: null,
   });
   const [dateState, dispatchDate] = useReducer(inputReducer, {
-    value: props.item ? props.item.dueDate : "",
+    value: props.item ? props.item.due_date : "",
     isValid: true,
   });
   const [priority, setPriority] = useState("All");
@@ -80,7 +81,7 @@ export const Modal = (props) => {
           onChange={dateChangeHandler}
         />
         {dateState.isValid === false && (
-          <div className="invalid-feedback">Date must be before today.</div>
+          <div className="invalid-feedback">Date must be after today.</div>
         )}
         <button
           type={"button"}
