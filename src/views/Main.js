@@ -1,5 +1,6 @@
 import { useReducer, useState } from "react";
 import Container from "../components/Container/Container";
+import Metrics from "../components/Metrics/Metrics";
 import NewTodoButton from "../components/NewTodo/NewTodoButton";
 import PaginationControls from "../components/PaginationControls/PaginationControls";
 import SearchControls from "../components/SearchControls/SearchControls";
@@ -29,6 +30,7 @@ const Main = () => {
       <NewTodoButton refresh={refresh} />
       <TodoList items={todos} refresh={refresh} />
       <PaginationControls page={page} setPage={setPage} size={size} />
+      <Metrics refresh={refresh} />
     </Container>
   );
 };

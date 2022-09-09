@@ -1,5 +1,4 @@
 import { BACKEND_URL } from "../utils/constants";
-import { useState, useEffect } from "react";
 
 export const createTodo = async (todo) => {
   const response = await fetch(BACKEND_URL + "todos", {
@@ -61,4 +60,11 @@ export const updateTodoAsDoneUndone = async (todoId, option) => {
     referrerPolicy: "no-referrer",
   });
   return response.json();
+};
+
+export const getMetrics = async () => {
+  const response = await fetch(BACKEND_URL + "todos/metrics").then((response) =>
+    response.json()
+  );
+  return response;
 };
