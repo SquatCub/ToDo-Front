@@ -17,6 +17,22 @@ export const createTodo = async (todo) => {
   return response.json();
 };
 
+export const updateTodo = async (todo, todoId) => {
+  const response = await fetch(BACKEND_URL + "todos/" + todoId, {
+    method: "PUT",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(todo),
+  });
+  return response.json();
+};
+
 export const deleteTodo = async (todoId) => {
   const response = await fetch(BACKEND_URL + "todos/" + todoId, {
     method: "DELETE",

@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import { inputReducer } from "../../utils/reducers/modalReducers";
-import { createTodo } from "../../services/TodosServices";
+import { createTodo, updateTodo } from "../../services/TodosServices";
 
 export const Modal = (props) => {
   const [nameState, dispatchName] = useReducer(inputReducer, {
@@ -17,7 +17,7 @@ export const Modal = (props) => {
   });
   const [priority, setPriority] = useState("Low");
   const [formIsValid, setFormIsValid] = useState(false);
-  const [todoIsCreated, setTodoIsCreated] = useState(null);
+  const [todoIsSaved, setTodoIsSaved] = useState(null);
 
   const nameChangeHandler = (event) => {
     dispatchName({ type: "INPUT_NAME", val: event.target.value });
@@ -40,13 +40,26 @@ export const Modal = (props) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    createTodo({
-      name: nameState.value,
-      due_date: dateState.value,
-      priority: priority,
-    }).then((data) => {
-      if (data.code === 200) setTodoIsCreated(true);
-      if (data.code === 400) setTodoIsCreated(false);
+    let save;
+    if (props.item) {
+      save = updateTodo(
+        {
+          name: nameState.value,
+          due_date: dateState.value,
+          priority: priority,
+        },
+        props.item.id
+      );
+    } else {
+      save = createTodo({
+        name: nameState.value,
+        due_date: dateState.value,
+        priority: priority,
+      });
+    }
+    save.then((data) => {
+      if (data.code === 200) setTodoIsSaved(true);
+      if (data.code === 400) setTodoIsSaved(false);
     });
   };
 
@@ -128,11 +141,15 @@ export const Modal = (props) => {
         </button>
       </footer>
       <div className={props.classes.actions}>
-        {todoIsCreated === true && (
-          <span className="text-success">To-do created successfully.</span>
+        {todoIsSaved === true && (
+          <span className="text-success">
+            To-do {props.item ? "updated" : "created"} successfully.
+          </span>
         )}
-        {todoIsCreated === false && (
-          <span className="text-danger">To-do was not created.</span>
+        {todoIsSaved === false && (
+          <span className="text-danger">
+            To-do was not {props.item ? "updated" : "created"}.
+          </span>
         )}
       </div>
     </form>

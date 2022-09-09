@@ -15,7 +15,9 @@ const TodoList = (props) => {
         </thead>
         <tbody>
           {props.items.map((item) => {
-            return <TodoItem key={item.id} item={item} />;
+            return (
+              <TodoItem key={item.id} item={item} refresh={props.refresh} />
+            );
           })}
         </tbody>
       </table>

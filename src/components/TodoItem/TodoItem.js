@@ -2,16 +2,18 @@ import { useState } from "react";
 import NewTodoModal from "../NewTodo/NewTodoModal";
 import { deleteTodo } from "../../services/TodosServices";
 
-const TodoItem = ({ item }) => {
+const TodoItem = ({ item, refresh }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onToggleModal = () => {
     setOpenModal((openModal) => !openModal);
+    refresh();
   };
 
   const deleteT = () => {
     deleteTodo(item.id).then((res) => {
       alert("Todo deleted");
+      refresh();
     });
   };
 

@@ -27,7 +27,7 @@ const Main = () => {
         refresh={refresh}
       />
       <NewTodoButton refresh={refresh} />
-      <TodoList items={todos} />
+      <TodoList items={todos} refresh={refresh} />
       <PaginationControls page={page} setPage={setPage} size={size} />
     </Container>
   );
