@@ -3,7 +3,6 @@ import { inputReducer } from "../../utils/reducers/modalReducers";
 import { createTodo } from "../../services/TodosServices";
 
 export const Modal = (props) => {
-  console.log(props);
   const [nameState, dispatchName] = useReducer(inputReducer, {
     value: props.item ? props.item.name : "",
     isValid: null,

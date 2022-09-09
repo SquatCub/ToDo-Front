@@ -1,12 +1,18 @@
 import { useState } from "react";
 import NewTodoModal from "../NewTodo/NewTodoModal";
-import { Priorities } from "../../utils/constants";
+import { deleteTodo } from "../../services/TodosServices";
 
 const TodoItem = ({ item }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onToggleModal = () => {
     setOpenModal((openModal) => !openModal);
+  };
+
+  const deleteT = () => {
+    deleteTodo(item.id).then((res) => {
+      alert("Todo deleted");
+    });
   };
 
   const getTodoStatus = () => {
@@ -51,7 +57,9 @@ const TodoItem = ({ item }) => {
           <button className="btn btn-warning" onClick={onToggleModal}>
             Edit
           </button>
-          <button className="btn btn-danger">Delete</button>
+          <button className="btn btn-danger" onClick={deleteT}>
+            Delete
+          </button>
         </td>
       </tr>
     </>
