@@ -47,3 +47,18 @@ export const deleteTodo = async (todoId) => {
   });
   return response.json();
 };
+
+export const updateTodoAsDoneUndone = async (todoId, option) => {
+  const response = await fetch(BACKEND_URL + "todos/" + todoId + "/" + option, {
+    method: "PUT",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  });
+  return response.json();
+};

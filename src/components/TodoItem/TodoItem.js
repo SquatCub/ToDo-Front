@@ -1,6 +1,9 @@
 import { useState } from "react";
 import NewTodoModal from "../NewTodo/NewTodoModal";
-import { deleteTodo } from "../../services/TodosServices";
+import {
+  deleteTodo,
+  updateTodoAsDoneUndone,
+} from "../../services/TodosServices";
 
 const TodoItem = ({ item, refresh }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -12,7 +15,8 @@ const TodoItem = ({ item, refresh }) => {
 
   const deleteT = () => {
     deleteTodo(item.id).then((res) => {
-      alert("Todo deleted");
+      if (res.code == 200) alert("Todo deleted");
+      else alert("Todo not deleted");
       refresh();
     });
   };
@@ -29,6 +33,16 @@ const TodoItem = ({ item, refresh }) => {
     }
     return "";
   };
+
+  const doneUndoneHandler = () => {
+    const option = item.done ? "undone" : "done";
+    updateTodoAsDoneUndone(item.id, option).then((res) => {
+      if (res.code == 200) alert(`Todo marked as ${option}`);
+      else alert("Todo not updated");
+      refresh();
+    });
+  };
+
   const getIfDone = () => {
     if (item.done) return "fw-bold";
     return "";
@@ -49,7 +63,7 @@ const TodoItem = ({ item, refresh }) => {
             className="form-check-input"
             type="checkbox"
             checked={item.done ? true : false}
-            onChange={() => !item.done}
+            onChange={doneUndoneHandler}
           />
         </th>
         <td>{item.name}</td>
