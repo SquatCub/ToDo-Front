@@ -5,13 +5,17 @@ import { createTodo } from "../../services/TodosServices";
 export const Modal = (props) => {
   const [nameState, dispatchName] = useReducer(inputReducer, {
     value: props.item ? props.item.name : "",
-    isValid: null,
+    isValid: props.item ? true : null,
   });
   const [dateState, dispatchDate] = useReducer(inputReducer, {
-    value: props.item ? props.item.due_date : "",
+    value: props.item
+      ? props.item.due_date != null
+        ? props.item.due_date
+        : ""
+      : "",
     isValid: true,
   });
-  const [priority, setPriority] = useState("All");
+  const [priority, setPriority] = useState("Low");
   const [formIsValid, setFormIsValid] = useState(false);
   const [todoIsCreated, setTodoIsCreated] = useState(null);
 

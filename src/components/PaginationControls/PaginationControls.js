@@ -10,16 +10,19 @@ const PaginationControls = (props) => {
             Previous
           </button>
         </li>
-        {[...Array(Math.round(props.size / 10) + 1)].map((e, i) => {
+        {[...Array(Math.floor((props.size - 1) / 10) + 1)].map((e, i) => {
           return (
-            <li className={`page-item ${i + 1 === props.page ? "active" : ""}`}>
+            <li
+              key={i + "page"}
+              className={`page-item ${i + 1 === props.page ? "active" : ""}`}
+            >
               <a className="page-link">{i + 1}</a>
             </li>
           );
         })}
         <li
           className={`page-item ${
-            props.page * 10 > props.size ? "disabled" : ""
+            props.page * 10 > props.size - 1 ? "disabled" : ""
           }`}
         >
           <button

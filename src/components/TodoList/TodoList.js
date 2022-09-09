@@ -6,9 +6,7 @@ const TodoList = (props) => {
       <table className="table border">
         <thead>
           <tr>
-            <th scope="col">
-              <input className="form-check-input" type="checkbox" />
-            </th>
+            <th scope="col">Done</th>
             <th scope="col">Name</th>
             <th scope="col">Priority</th>
             <th scope="col">Due Date</th>
@@ -21,6 +19,9 @@ const TodoList = (props) => {
           })}
         </tbody>
       </table>
+      {props.items.length == 0 && (
+        <div className="text-center mb-5">No data</div>
+      )}
     </div>
   );
 };
