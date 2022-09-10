@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
-import { getMetrics } from "../../services/TodosServices";
+import { useState, useEffect, useContext } from "react";
+import { getMetrics } from "../../utils/services/TodosServices";
+import TodoContext from "../../utils/context/todo-context";
 
-const Metrics = ({ refresh }) => {
+const Metrics = () => {
+  const ctx = useContext(TodoContext);
+
   const [totalAverage, setTotalAverage] = useState("-");
   const [totalLow, setTotalLow] = useState("-");
   const [totalMedium, setTotalMedium] = useState("-");
@@ -14,7 +17,7 @@ const Metrics = ({ refresh }) => {
       setTotalMedium(data.data.medium);
       setTotalHigh(data.data.high);
     });
-  }, [refresh]);
+  }, [ctx.refresh]);
 
   return (
     <div className="border m-2 p-2 row">

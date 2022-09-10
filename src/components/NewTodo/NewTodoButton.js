@@ -1,12 +1,14 @@
-import { useState } from "react";
-import NewTodoModal from "./NewTodoModal";
+import { useContext, useState } from "react";
+import TodoContext from "../../utils/context/todo-context";
+import NewTodoModal from "./TodoModal";
 
 const NewTodoButton = (props) => {
   const [openModal, setOpenModal] = useState(false);
+  const ctx = useContext(TodoContext);
 
   const onToggleModal = () => {
     setOpenModal((openModal) => !openModal);
-    props.refresh();
+    ctx.refresh();
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
-import { inputReducer } from "../../utils/reducers/modalReducers";
-import { createTodo, updateTodo } from "../../services/TodosServices";
+import { inputReducer } from "../../utils/reducers/modal-reducers";
+import { createTodo, updateTodo } from "../../utils/services/TodosServices";
 
 export const Modal = (props) => {
   const [nameState, dispatchName] = useReducer(inputReducer, {
@@ -15,7 +15,9 @@ export const Modal = (props) => {
       : "",
     isValid: true,
   });
-  const [priority, setPriority] = useState("Low");
+  const [priority, setPriority] = useState(
+    props.item ? props.item.priority : "LOW"
+  );
   const [formIsValid, setFormIsValid] = useState(false);
   const [todoIsSaved, setTodoIsSaved] = useState(null);
 
@@ -113,13 +115,13 @@ export const Modal = (props) => {
           defaultValue={props.item ? props.item.priority : priority}
           onChange={priorityChangeHandler}
         >
-          <option key={"Low"} value={"Low"}>
+          <option key={"Low"} value={"LOW"}>
             {"Low"}
           </option>
-          <option key={"Medium"} value={"Medium"}>
+          <option key={"Medium"} value={"MEDIUM"}>
             {"Medium"}
           </option>
-          <option key={"High"} value={"High"}>
+          <option key={"High"} value={"HIGH"}>
             {"High"}
           </option>
         </select>

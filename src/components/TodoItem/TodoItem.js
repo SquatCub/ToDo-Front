@@ -1,23 +1,25 @@
-import { useState } from "react";
-import NewTodoModal from "../NewTodo/NewTodoModal";
+import { useContext, useState } from "react";
+import NewTodoModal from "../NewTodo/TodoModal";
 import {
   deleteTodo,
   updateTodoAsDoneUndone,
-} from "../../services/TodosServices";
+} from "../../utils/services/TodosServices";
+import TodoContext from "../../utils/context/todo-context";
 
-const TodoItem = ({ item, refresh }) => {
+const TodoItem = ({ item }) => {
   const [openModal, setOpenModal] = useState(false);
+  const ctx = useContext(TodoContext);
 
   const onToggleModal = () => {
     setOpenModal((openModal) => !openModal);
-    refresh();
+    ctx.refresh();
   };
 
   const deleteT = () => {
     deleteTodo(item.id).then((res) => {
-      if (res.code == 200) alert("Todo deleted");
+      if (res.code === 200) alert("Todo deleted");
       else alert("Todo not deleted");
-      refresh();
+      ctx.refresh();
     });
   };
 
@@ -37,9 +39,9 @@ const TodoItem = ({ item, refresh }) => {
   const doneUndoneHandler = () => {
     const option = item.done ? "undone" : "done";
     updateTodoAsDoneUndone(item.id, option).then((res) => {
-      if (res.code == 200) alert(`Todo marked as ${option}`);
+      if (res.code === 200) alert(`Todo marked as ${option}`);
       else alert("Todo not updated");
-      refresh();
+      ctx.refresh();
     });
   };
 
@@ -67,7 +69,10 @@ const TodoItem = ({ item, refresh }) => {
           />
         </th>
         <td>{item.name}</td>
-        <td>{item.priority}</td>
+        <td>
+          {item.priority.substring(0, 1) +
+            item.priority.substring(1, item.priority.length).toLowerCase()}
+        </td>
         <td>{item.due_date}</td>
         <td>
           <button className="btn btn-warning" onClick={onToggleModal}>

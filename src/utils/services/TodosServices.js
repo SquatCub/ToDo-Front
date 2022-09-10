@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "../utils/constants";
+import { BACKEND_URL } from "../constants";
 
 export const createTodo = async (todo) => {
   const response = await fetch(BACKEND_URL + "todos", {

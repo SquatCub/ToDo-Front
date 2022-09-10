@@ -1,7 +1,12 @@
-const SearchControls = ({ searchState, dispatchState, refresh }) => {
+import { useContext } from "react";
+import TodoContext from "../../utils/context/todo-context";
+
+const SearchControls = ({ searchState, dispatchState }) => {
+  const ctx = useContext(TodoContext);
+
   const formHandler = (e) => {
     e.preventDefault();
-    refresh();
+    ctx.refresh();
   };
 
   const nameChangeHandler = (event) => {
@@ -38,13 +43,13 @@ const SearchControls = ({ searchState, dispatchState, refresh }) => {
             <option key={"All"} value={""}>
               {"All"}
             </option>
-            <option key={"Low"} value={"Low"}>
+            <option key={"Low"} value={"LOW"}>
               {"Low"}
             </option>
-            <option key={"Medium"} value={"Medium"}>
+            <option key={"Medium"} value={"MEDIUM"}>
               {"Medium"}
             </option>
-            <option key={"High"} value={"High"}>
+            <option key={"High"} value={"HIGH"}>
               {"High"}
             </option>
           </select>
@@ -61,10 +66,10 @@ const SearchControls = ({ searchState, dispatchState, refresh }) => {
             <option key={"All"} value={""}>
               {"All"}
             </option>
-            <option key={"Done"} value={"Done"}>
+            <option key={"Done"} value={"true"}>
               {"Done"}
             </option>
-            <option key={"Undone"} value={"Undone"}>
+            <option key={"Undone"} value={"false"}>
               {"Undone"}
             </option>
           </select>
