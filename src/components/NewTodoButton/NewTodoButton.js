@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import TodoContext from "../../utils/context/todo-context";
-import NewTodoModal from "./TodoModal";
+import TodoModal from "../TodoModal/TodoModal";
 
-const NewTodoButton = (props) => {
+const NewTodoButton = () => {
   const [openModal, setOpenModal] = useState(false);
   const ctx = useContext(TodoContext);
 
@@ -14,7 +14,7 @@ const NewTodoButton = (props) => {
   return (
     <div>
       {openModal && (
-        <NewTodoModal
+        <TodoModal
           title="New To-Do"
           description="Create a new To-do task"
           onToggleModal={onToggleModal}
