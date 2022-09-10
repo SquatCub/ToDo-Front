@@ -6,7 +6,9 @@ export const inputReducer = (state, action) => {
     };
   }
   if (action.type === "INPUT_DATE") {
-    return { value: action.val, isValid: new Date(action.val) > new Date() };
+    const datenew = new Date(action.val);
+    datenew.setDate(datenew.getDate() + 1);
+    return { value: action.val, isValid: datenew >= new Date() };
   }
   return { value: "", isValid: true };
 };

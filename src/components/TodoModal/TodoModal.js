@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import classes from "./NewTodoModal.module.css";
+import classes from "./TodoModal.module.css";
 import { Backdrop } from "../Backdrop/Backdrop";
 import { Modal } from "../Modal/Modal";
 
@@ -15,7 +15,6 @@ const NewTodoModal = (props) => {
         <Modal
           title={props.title}
           description={props.description}
-          item={props.item ? props.item : null}
           onToggleModal={props.onToggleModal}
           classes={classes}
         />,

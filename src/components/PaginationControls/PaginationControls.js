@@ -16,7 +16,7 @@ const PaginationControls = (props) => {
               key={i + "page"}
               className={`page-item ${i + 1 === props.page ? "active" : ""}`}
             >
-              <a className="page-link">{i + 1}</a>
+              <div className="page-link">{i + 1}</div>
             </li>
           );
         })}

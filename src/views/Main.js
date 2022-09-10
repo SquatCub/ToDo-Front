@@ -1,7 +1,7 @@
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import Container from "../components/Container/Container";
 import Metrics from "../components/Metrics/Metrics";
-import NewTodoButton from "../components/NewTodo/NewTodoButton";
+import NewTodoButton from "../components/NewTodoButton/NewTodoButton";
 import PaginationControls from "../components/PaginationControls/PaginationControls";
 import SearchControls from "../components/SearchControls/SearchControls";
 import TodoList from "../components/TodoList/TodoList";
@@ -24,7 +24,6 @@ const Main = () => {
   });
   const [hasChanged, setHasChanged] = useState(false);
   const [page, setPage] = useState(1);
-
   const [todos, size] = useTodos(hasChanged, page, searchState, orderBy);
 
   const refresh = () => {

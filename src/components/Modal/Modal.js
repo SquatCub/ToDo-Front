@@ -1,25 +1,27 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useContext } from "react";
+import ItemContext from "../../utils/context/item-context";
 import { inputReducer } from "../../utils/reducers/modal-reducers";
 import { createTodo, updateTodo } from "../../utils/services/TodosServices";
 
 export const Modal = (props) => {
+  const ctxItem = useContext(ItemContext);
+  const [priority, setPriority] = useState(
+    ctxItem.item ? ctxItem.item.priority : "LOW"
+  );
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [todoIsSaved, setTodoIsSaved] = useState(null);
   const [nameState, dispatchName] = useReducer(inputReducer, {
-    value: props.item ? props.item.name : "",
-    isValid: props.item ? true : null,
+    value: ctxItem.item ? ctxItem.item.name : "",
+    isValid: ctxItem.item ? true : null,
   });
   const [dateState, dispatchDate] = useReducer(inputReducer, {
-    value: props.item
-      ? props.item.due_date != null
-        ? props.item.due_date
+    value: ctxItem.item
+      ? ctxItem.item.due_date != null
+        ? ctxItem.item.due_date
         : ""
       : "",
     isValid: true,
   });
-  const [priority, setPriority] = useState(
-    props.item ? props.item.priority : "LOW"
-  );
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [todoIsSaved, setTodoIsSaved] = useState(null);
 
   const nameChangeHandler = (event) => {
     dispatchName({ type: "INPUT_NAME", val: event.target.value });
@@ -36,28 +38,30 @@ export const Modal = (props) => {
 
   const { isValid: nameIsValid } = nameState;
   const { isValid: dateIsValid } = dateState;
+
   useEffect(() => {
     setFormIsValid(nameIsValid && dateIsValid);
   }, [nameIsValid, dateIsValid]);
 
+  useEffect(() => {
+    if (setTodoIsSaved) setTodoIsSaved(null);
+  }, [nameState, dateState, priority]);
+
   const submitForm = (e) => {
     e.preventDefault();
     let save;
-    if (props.item) {
-      save = updateTodo(
-        {
-          name: nameState.value,
-          due_date: dateState.value,
-          priority: priority,
-        },
-        props.item.id
-      );
+    const todo = {
+      name: nameState.value,
+      due_date: dateState.value,
+      priority: priority,
+    };
+    if (ctxItem.item) {
+      save = updateTodo(todo, ctxItem.item.id);
     } else {
-      save = createTodo({
-        name: nameState.value,
-        due_date: dateState.value,
-        priority: priority,
-      });
+      save = createTodo(todo);
+      dispatchDate({ type: "" });
+      dispatchName({ type: "" });
+      setPriority("LOW");
     }
     save.then((data) => {
       if (data.code === 200) setTodoIsSaved(true);
@@ -112,7 +116,7 @@ export const Modal = (props) => {
         <label>Priority </label>
         <select
           className="form-select"
-          defaultValue={props.item ? props.item.priority : priority}
+          value={priority}
           onChange={priorityChangeHandler}
         >
           <option key={"Low"} value={"LOW"}>
@@ -145,12 +149,12 @@ export const Modal = (props) => {
       <div className={props.classes.actions}>
         {todoIsSaved === true && (
           <span className="text-success">
-            To-do {props.item ? "updated" : "created"} successfully.
+            To-do {ctxItem.item ? "updated" : "created"} successfully.
           </span>
         )}
         {todoIsSaved === false && (
           <span className="text-danger">
-            To-do was not {props.item ? "updated" : "created"}.
+            To-do was not {ctxItem.item ? "updated" : "created"}.
           </span>
         )}
       </div>

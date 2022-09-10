@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import TodoItem from "../TodoItem/TodoItem";
 import TodoContext from "../../utils/context/todo-context";
+import ItemContext from "../../utils/context/item-context";
 const TodoList = (props) => {
   const ctx = useContext(TodoContext);
   return (
@@ -51,7 +52,11 @@ const TodoList = (props) => {
         </thead>
         <tbody>
           {ctx.items.map((item) => {
-            return <TodoItem key={item.id} item={item} />;
+            return (
+              <ItemContext.Provider key={item.id} value={{ item }}>
+                <TodoItem />
+              </ItemContext.Provider>
+            );
           })}
         </tbody>
       </table>
